@@ -1,0 +1,1 @@
+select * from buyers where username = ${username};
