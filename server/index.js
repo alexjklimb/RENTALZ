@@ -10,7 +10,13 @@ http = require('http').createServer(app),
 io = require('socket.io')(http),
 {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET}= process.env;
 app.use(express.json());
+const path = require('path'); 
 
+app.use(express.static(__dirname + '/../build'));
+
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 app.use(session({
     resave: false,
     saveUninitialized: true,
@@ -47,7 +53,7 @@ io.on('connection', (socket) => {
     socket.on('SEND_MESSAGE', function(data){
       io.emit('RECEIVE_MESSAGE', data);
   })
-  
+
     socket.on('disconnect', () => {
       console.log('user disconnected');
     });
