@@ -5,7 +5,7 @@ function Landing(){
         <div className="landing">
             <div className="gradient">
             <header>
-                <span>RENTALZ</span>
+                <span className="rentalz">RENTALZ</span>
                 <Link className="button" to="/Login">Have an account? Login here</Link>
             </header>
             <div className="cont">

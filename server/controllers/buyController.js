@@ -4,7 +4,8 @@ module.exports = {
         const db = req.app.get('db')
         const {firstname,lastname,email,username, password} = req.body
         const matchingUser = await db.checkBuyer({username});
-        if(matchingUser[0]) return res.status(400).send('Username already being used')
+        const matchingOther = await db.checkSeller({username})
+        if(matchingUser[0]||matchingOther[0]) return res.status(400).send('Username already being used')
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt);
 
@@ -16,17 +17,17 @@ module.exports = {
     loginUser: async (req, res) => {
         const db = req.app.get('db');
         const {username, password} = req.body;
-
+        const matchingOther = await db.checkSeller({username});
         const matchingUser = await db.checkBuyer({username});
-        if (!matchingUser[0]) return res.status(400).send('Username not found');
-
-        const authentication = bcrypt.compareSync(password, matchingUser[0].password);
+        if (!matchingUser[0]&&!matchingOther[0]) return res.status(400).send('Username not found');
+        const authentication = matchingUser[0]? bcrypt.compareSync(password, matchingUser[0].password) : bcrypt.compareSync(password, matchingOther[0].password) ;
         if (!authentication) {
             return res.status(401).send('Password is incorrect');
         }
-        req.session.userid = matchingUser[0].id;
-        delete matchingUser[0].password;
-        return res.status(202).send(matchingUser[0]);
+        const user = matchingUser[0]? matchingUser:matchingOther;
+        req.session.userid = user[0].id;
+        delete user[0].password;
+        return res.status(202).send([matchingUser[0],matchingOther[0]]);
     },
     logoutUser: async (req, res) => {
 

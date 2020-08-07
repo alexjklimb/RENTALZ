@@ -16,6 +16,88 @@ $highlight:rgb(106, 248, 229);
   width:100vw;
   background-image:radial-gradient(rgba(0,0,0, .1), rgba(0,0,0, 1));
 }
+.link{
+  outline:none;
+  border:none;
+  text-decoration:none;
+  color:black;
+}
+.container{
+  @extend%cont;
+  flex-direction:column;
+  .title{
+    margin-top:10px;
+    font-size:20px;
+  }
+  header{
+    @extend%flex;
+    height:80px;
+    width:100vw;
+    justify-content:space-between;
+    span{
+      font-size:30px;
+      margin-left:40px;
+    }
+    div{
+      @extend%flex;
+    }
+    .link{
+      @extend%flex;
+      padding:30px;
+      height:20px;
+      color:black;
+      text-align:center;
+      width:100px;
+      text-decoration:none;
+      transition:1s;
+      &:hover{
+        border-bottom:1px solid black;
+      }
+    }
+  }
+  .messagecont{
+    background-color:$highlight;
+  @extend%flex;
+  flex-direction:column;
+  width:60vw;
+  height:550px;
+  border-bottom:1px solid lightgrey;
+  box-shadow:2px 2px 8px;
+  border-radius:15px;
+  margin-top:50px;
+  input{
+    font-size:30px;
+    padding:none;
+    height:50px;
+    width:49vw;
+  }
+  button{
+    height:50px;
+  }
+  .footer{
+    margin-top:20px;
+    @extend%flex;
+  }
+  .messages{
+    padding:10px;
+    background-color:white;
+    border-radius:15px;
+    box-shadow:inset 0 0 5px;
+    height:400px;
+    width:55vw;
+  }
+  }
+}
+.chatlink{
+  margin-left:40vw;
+  text-align:center;
+  font-size:30px;
+  margin-bottom:10px;
+  outline:none;
+  border:none;
+  text-decoration:none;
+  color:black;
+}
 .formcont{
   @extend%cont;
   justify-content:flex-start;
@@ -112,13 +194,15 @@ $highlight:rgb(106, 248, 229);
     @extend %flex;
     justify-content:space-between;
     span{
-      margin-left:100px;
+      margin-left:5vw;
+      margin-right:20px;
       color:white;
       font-size:40px;
     }
     .button{
     text-decoration:none;
-    margin-right:80px;
+    margin-right:5vw;
+    margin-top:24px;
     height:60px;
     width:140px;
     outline:none;
@@ -134,6 +218,7 @@ $highlight:rgb(106, 248, 229);
 }
 .cont{
   @extend%cont;
+
   span{
     @extend%flex;
     height:100%;
@@ -218,11 +303,184 @@ $highlight:rgb(106, 248, 229);
   height:200px;
   margin-bottom:50px;
   .vehicle{
+    @extend%flex;
     width: 80%;
     height:180px;
     background-color:white;
     margin:30px;
     border-radius:15px;
     box-shadow:2px 2px 8px;
+    button{
+      border-radius:10px;
+      height:40px;
+      width:70px;
+      outline:none;
+      border:none;
+      background-color:$highlight;
+    }
+    p{
+      width:150px;
+      overflow:scroll;
+      height:100px;
+    }
+    .area{
+      width:100%;
+      @extend%flex;
+      justify-content:space-around;
+      margin:none;
+    }
+    .imgcont{
+      overflow:hidden;
+      height:160px;
+      width:250px;
+      img{
+        width:100%
+      }
+    }
   }
+}
+@media(max-width:500px){
+  .cont{
+    flex-direction:column;
+  span{
+    margin-bottom:20px;
+    height:100px;
+    width:300px;
+  }
+  .buttons{
+    flex-direction:column;
+  }
+  .button{
+    height:80px;
+    width:150px;
+    outline:none;
+    background:none;
+    font-size:20px;
+    border:1.5px solid rgb(200,200,200);
+    color:white;
+    border-radius:15px;
+    transition:.5s;
+    cursor:pointer;
+    &:hover{
+      border:1.5px solid white;
+      background-color:rgba(0,0,0, .5);
+      font-size:24px;
+      width:200px;
+      height:85px;
+    }
+  }
+}
+.vehicles{
+  width: 100%;
+  height:90vh;
+  margin-top:20px;
+  margin-bottom:0px;
+  .vehicle{
+    width: 80%;
+    height:80vh;
+    margin:5px;
+    .area{
+      padding:10px;
+      width:100%;
+      flex-direction:column;
+      height:100%
+    }
+  }
+}
+.formcont{
+  justify-content:flex-start;
+  flex-direction:column;
+  height:400px;
+  margin-bottom:200px;
+  .form{
+    margin-top:30px;
+    div{
+      justify-content:flex-start;
+      span{
+        margin-bottom:50px;
+        font-weight:300;
+        font-size:13px;
+      }
+    }
+    span{
+      font-size:16px;
+      font-weight:500;
+      margin-bottom:20px;
+    }
+  }
+}
+.forms{
+  display:flex;
+  flex-direction:column;
+  width:90vw;
+  padding-left:0px;
+  height:500px;
+  border-bottom:none;
+  box-shadow:none;
+  margin-top:50px;
+  div{
+    justify-content:flex-start;
+    span{
+      font-weight:300;
+      font-size:10px;
+    }
+  }
+}
+.container{
+  height:100vh;
+  width:100vw;
+  flex-direction:column;
+  .title{
+    margin-top:10px;
+    font-size:20px;
+  }
+  header{
+    height:80px;
+    width:100vw;
+    justify-content:space-between;
+    span{
+      font-size:30px;
+      margin-left:40px;
+    }
+    .link{
+      padding:30px;
+      height:20px;
+      color:black;
+      text-align:center;
+      width:100px;
+      text-decoration:none;
+      transition:1s;
+      &:hover{
+        border-bottom:1px solid black;
+      }
+    }
+  }
+  .messagecont{
+  width:100%;
+  height:100%;
+  box-shadow:none;
+  border-radius:0px;
+  margin-top:0px;
+  input{
+    font-size:15px;
+    padding:none;
+    height:20px;
+    width:69vw;
+  }
+  button{
+    height:25px;
+  }
+  .footer{
+    margin-top:20px;
+  }
+  .messages{
+    height:80%;
+    width:80%;
+  }
+  }
+}
+.chatlink{
+  margin-left:30px;
+}
+
 }

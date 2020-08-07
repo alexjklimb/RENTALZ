@@ -9,7 +9,12 @@ function Login(props){
     function login() {
         axios.post('/auth/login', {username: username, password: password})
         .then(res => {
-            props.history.push('/Register-vehicle')
+            if(res.data[0]===null){
+            props.history.push('/Register-vehicle')}
+            else{
+            props.history.push("/Search")
+            }
+
         })
     }
 

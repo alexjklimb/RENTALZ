@@ -12,7 +12,7 @@ function Buy(props){
 function register(){
         axios.post('/auth/register', {firstname:firstname,lastname:lastname,email:email,username:username,password:password})
         .then(res => {
-            props.history.push('/Register-vehicle');
+            props.history.push('/Search');
         })
      }
 

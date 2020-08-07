@@ -1,12 +1,14 @@
 require('dotenv').config();
 const express = require('express'),
+app = express(),
 massive = require('massive'),
 session = require('express-session'),
 buyCtrl = require('./controllers/buyController'),
 sellCtrl = require('./controllers/sellController'),
 mainCtrl =  require('./controllers/mainController'),
-{SERVER_PORT, CONNECTION_STRING, SESSION_SECRET}= process.env,
-app = express();
+http = require('http').createServer(app),
+io = require('socket.io')(http),
+{SERVER_PORT, CONNECTION_STRING, SESSION_SECRET}= process.env;
 app.use(express.json());
 
 app.use(session({
@@ -21,6 +23,14 @@ app.post('/auth/register', buyCtrl.createUser);
 app.post('/auth/login', buyCtrl.loginUser);
 app.get('/auth/logout', buyCtrl.logoutUser);
 
+app.post('/auth/register1', sellCtrl.createUser);
+
+app.get('/api/posts', mainCtrl.getAllPosts);
+app.get('/api/post', mainCtrl.getPost);
+app.post('/api/posts', mainCtrl.createPost);
+app.delete('/api/posts/:id', mainCtrl.deletePost);
+
+
 
 
 
@@ -31,5 +41,18 @@ massive({
     app.set('db', db);
     console.log('db connected');
 });
-
-app.listen(SERVER_PORT, () => console.log(`Server is running on ${SERVER_PORT}`))
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    
+    socket.on('SEND_MESSAGE', function(data){
+      io.emit('RECEIVE_MESSAGE', data);
+  })
+  
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+    });
+  });
+  
+  http.listen(SERVER_PORT, () => {
+    console.log('listening on *:3000');
+  });
